@@ -1,0 +1,121 @@
+// fonts
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("src/asset/fonts/Poppins-Bold.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PoppinsRegular";
+  src: url("src/asset/fonts/Poppins-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+//for number input
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+:root {
+  // --primary-color: #007bff;
+  // --secondary-color: #6c757d;
+  // --accent-color: #f0ad4e;
+  // --light-color: #f8f9fa;
+  // --dark-color: #212529;
+  --primary: #3b82f6;
+  --secondary: #374151;
+  --border: #d1d5db;
+  --border-focus: #64748b;
+}
+
+//actual scss
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: PoppinsRegular, sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background-color: black;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.main__inner {
+  width: 45vw;
+  height: 80vh;
+  background-color: white;
+  border-radius: 10px 10px 300px 10px;
+  padding: 50px;
+  .birthday {
+    display: flex;
+    gap: 50px;
+    padding: 0 0 50px 0;
+    border-bottom: 1px solid var(--secondary);
+    position: relative;
+    &__style {
+      &__label {
+        display: block;
+        font-size: 18px;
+        margin: 0 0 5px 0;
+        color: var(--secondary);
+        text-transform: uppercase;
+      }
+      &__input {
+        padding: 10px 20px;
+        font-size: 23px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        width: 120px;
+      }
+      &__input:focus {
+        outline: 1px solid var(--border-focus);
+      }
+    }
+    .arrow {
+      width: 70px;
+      height: 70px;
+      background-color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      right: 0px;
+      bottom: -35px;
+      transition: 0.5s;
+      &__img {
+        width: 35px;
+      }
+    }
+    .arrow:hover {
+      background-color: var(--secondary);
+    }
+  }
+  .results {
+    &__result {
+      font-size: 97px;
+      font-weight: bold;
+      font-style: italic;
+      &__num {
+        color: var(--primary);
+      }
+    }
+  }
+}
