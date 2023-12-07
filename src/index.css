@@ -64,8 +64,8 @@ body {
 }
 @media screen and (max-width: 767px) {
   .main__inner {
-    width: 25rem;
-    height: 35rem;
+    width: 24rem;
+    height: 30rem;
     padding: 20px;
     border-radius: 10px 10px 100px 10px;
   }
@@ -119,7 +119,7 @@ body {
 }
 @media screen and (max-width: 767px) {
   .main__inner .birthday__style__input {
-    width: 100px;
+    width: 95px;
     font-size: 18px;
   }
 }
@@ -201,7 +201,7 @@ body {
 }
 @media screen and (max-width: 767px) {
   .main__inner .results__result {
-    font-size: 76px;
+    font-size: 60px;
   }
 }
 .main__inner .results__result__num {

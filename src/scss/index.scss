@@ -59,8 +59,8 @@ body {
     border-radius: 10px 10px 300px 10px;
   }
   @include forNonPc {
-    width: 25rem;
-    height: 35rem;
+    width: 24rem;
+    height: 30rem;
     padding: 20px;
     border-radius: 10px 10px 100px 10px;
   }
@@ -99,7 +99,7 @@ body {
           font-size: 23px;
         }
         @include forNonPc {
-          width: 100px;
+          width: 95px;
           font-size: 18px;
         }
       }
@@ -173,7 +173,7 @@ body {
         font-size: 97px;
       }
       @include forNonPc {
-        font-size: 76px;
+        font-size: 60px;
       }
       &__num {
         color: var(--primary);
