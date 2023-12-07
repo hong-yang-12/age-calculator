@@ -1,6 +1,8 @@
 import React from "react";
 import arrow from "../src/assets/images/icon-arrow.svg";
 import { useState } from "react";
+import { useEffect } from "react";
+import CounterUp from "./components/CounterUp";
 
 const App = () => {
   const [inputForm, setInputForm] = useState({
@@ -9,10 +11,21 @@ const App = () => {
     year: "",
   });
   const [result, setResult] = useState({
-    age_year: "--",
-    age_month: "--",
-    age_day: "--",
+    age_year: 0,
+    age_month: 0,
+    age_day: 0,
   });
+  // const [result, setResult] = useState({
+  //   age_year: 0 || "--",
+  //   age_month: 0 || "--",
+  //   age_day: 0 || "--",
+  // });
+  // const [result, setResult] = useState({
+  //   age_year: "--",
+  //   age_month: "--",
+  //   age_day: "--",
+  // });
+  const [errors, setErrors] = useState({});
 
   const today = new Date();
   const current_year = today.getFullYear();
@@ -23,6 +36,7 @@ const App = () => {
     const { id, value } = e.target;
     setInputForm({ ...inputForm, [id]: value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -35,10 +49,44 @@ const App = () => {
     if (age_day < 0) {
       age_day = -1 * age_day;
     }
-    // console.log(typeof age_day);
-    setResult({ age_year, age_month, age_day });
-    console.log(age_year, age_month, age_day);
+
+    //required validation
+    const daysInMonth = new Date(
+      inputForm?.year,
+      inputForm?.month,
+      0
+    ).getDate();
+
+    const validationErrors = {};
+    if (!inputForm.day.trim()) {
+      validationErrors.day = "day required";
+    } else if (inputForm?.day < 1 || inputForm?.day > 31) {
+      validationErrors.day = "The day number is not between 1-31";
+    } else if (inputForm?.day > daysInMonth) {
+      validationErrors.day = "The date is invalid";
+    }
+    if (!inputForm.month.trim()) {
+      validationErrors.month = "month required";
+    } else if (inputForm?.month < 1 || inputForm?.month > 12) {
+      validationErrors.month = "The month number is not between 1-12";
+    }
+
+    if (!inputForm?.year.trim()) {
+      validationErrors.year = "year required";
+    } else if (inputForm?.year > current_year) {
+      validationErrors.year = "The year is in the future";
+    }
+
+    setErrors(validationErrors); //input errors
+    setResult({ age_year, age_month, age_day }); //submit form
+    //reset input form
+    setInputForm({
+      day: "",
+      month: "",
+      year: "",
+    });
   };
+  console.log(result?.age_day, result?.age_month, result?.age_year);
 
   return (
     <div className="main">
@@ -55,6 +103,9 @@ const App = () => {
               value={inputForm?.day}
               onChange={handleChange}
             />
+            {errors.day && (
+              <span className="birthday__style__error">{errors.day}</span>
+            )}
           </div>
           <div className="birthday__style">
             <label className="birthday__style__label" htmlFor="month">
@@ -67,6 +118,9 @@ const App = () => {
               value={inputForm?.month}
               onChange={handleChange}
             />
+            {errors.month && (
+              <span className="birthday__style__error">{errors.month}</span>
+            )}
           </div>
           <div className="birthday__style">
             <label className="birthday__style__label" htmlFor="year">
@@ -79,6 +133,9 @@ const App = () => {
               onChange={handleChange}
               value={inputForm?.year}
             />
+            {errors.year && (
+              <span className="birthday__style__error">{errors.year}</span>
+            )}
           </div>
           <button type="submit" className="arrow">
             <img className="arrow__img" src={arrow} alt="" />
@@ -86,15 +143,34 @@ const App = () => {
         </form>
         <div className="results">
           <p className="results__result">
-            <span className="results__result__num">{result?.age_year} </span>
+            <span className="results__result__num" id="year">
+              {result?.age_year === 0 ? (
+                "--"
+              ) : (
+                <CounterUp start={0} end={result?.age_year} />
+              )}
+            </span>{" "}
             years
           </p>
           <p className="results__result">
-            <span className="results__result__num">{result?.age_month} </span>
+            <span className="results__result__num">
+              {result?.age_month === 0 ? (
+                "--"
+              ) : (
+                <CounterUp start={0} end={result?.age_month} />
+              )}
+            </span>{" "}
             months
           </p>
           <p className="results__result">
-            <span className="results__result__num">{result?.age_day} </span>days
+            <span className="results__result__num">
+              {result?.age_day === 0 ? (
+                "--"
+              ) : (
+                <CounterUp start={0} end={result?.age_day} />
+              )}
+            </span>{" "}
+            days
           </p>
         </div>
       </div>

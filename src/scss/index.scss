@@ -1,16 +1,5 @@
-// fonts
-@font-face {
-  font-family: "PoppinsBold";
-  src: url("src/asset/fonts/Poppins-Bold.ttf");
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "PoppinsRegular";
-  src: url("src/asset/fonts/Poppins-Regular.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-}
+@use "./mixins/fonts.scss" as *;
+@use "./mixins/window_size.scss" as *;
 
 //for number input
 /* Chrome, Safari, Edge, Opera */
@@ -35,6 +24,7 @@ input[type="number"] {
   --secondary: #374151;
   --border: #d1d5db;
   --border-focus: #64748b;
+  --danger: #ef4444; //red-500
 }
 
 //actual scss
@@ -48,48 +38,85 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  background-color: black;
+  background-color: #f2e3e3;
 }
 .main {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  @include forPc {
+  }
+  @include forNonPc {
+  }
 }
 .main__inner {
-  width: 45vw;
-  height: 80vh;
   background-color: white;
-  border-radius: 10px 10px 300px 10px;
-  padding: 50px;
+  @include forPc {
+    width: 45rem;
+    height: 40rem;
+    padding: 50px;
+    border-radius: 10px 10px 300px 10px;
+  }
+  @include forNonPc {
+    width: 25rem;
+    height: 35rem;
+    padding: 20px;
+    border-radius: 10px 10px 100px 10px;
+  }
   .birthday {
     display: flex;
-    gap: 50px;
-    padding: 0 0 50px 0;
     border-bottom: 1px solid var(--secondary);
     position: relative;
+    @include forPc {
+      gap: 50px;
+      padding: 0 0 50px 0;
+    }
+    @include forNonPc {
+      gap: 30px;
+      padding: 0 0 70px 0;
+    }
     &__style {
+      position: relative;
       &__label {
         display: block;
-        font-size: 18px;
         margin: 0 0 5px 0;
         color: var(--secondary);
         text-transform: uppercase;
+        @include forPc {
+          font-size: 18px;
+        }
+        @include forNonPc {
+          font-size: 14px;
+        }
       }
       &__input {
         padding: 10px 20px;
-        font-size: 23px;
         border: 1px solid var(--border);
         border-radius: 5px;
-        width: 120px;
+        @include forPc {
+          width: 100px;
+          font-size: 23px;
+        }
+        @include forNonPc {
+          width: 100px;
+          font-size: 18px;
+        }
       }
       &__input:focus {
         outline: 1px solid var(--border-focus);
       }
+      &__error {
+        display: inline-block;
+        width: 180px;
+        position: absolute;
+        top: 80px;
+        left: 0px;
+        color: var(--danger);
+        font-size: 14px;
+      }
     }
     .arrow {
-      width: 70px;
-      height: 70px;
       background-color: var(--primary);
       display: flex;
       justify-content: center;
@@ -97,22 +124,57 @@ body {
       border: 1px solid var(--primary);
       border-radius: 50%;
       position: absolute;
-      right: 0px;
-      bottom: -35px;
       transition: 0.5s;
+      @include forPc {
+        width: 70px;
+        height: 70px;
+        right: 0px;
+        bottom: -35px;
+        animation: rollingLeft 2s ease 0s 1 normal forwards;
+      }
+      @include forNonPc {
+        width: 60px;
+        height: 60px;
+        right: 150px;
+        bottom: -30px;
+        animation: rollingLeft 1s ease 0s 1 normal forwards;
+      }
+      @keyframes rollingLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(-550px) rotate(-200deg);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateX(0) rotate(0deg);
+        }
+      }
       &__img {
-        width: 35px;
+        @include forPc {
+          width: 35px;
+        }
+        @include forNonPc {
+          width: 25px;
+        }
       }
     }
     .arrow:hover {
       background-color: var(--secondary);
+      border-color: var(--secondary);
     }
   }
   .results {
+    margin: 50px 0 0 0;
     &__result {
-      font-size: 97px;
       font-weight: bold;
       font-style: italic;
+      @include forPc {
+        font-size: 97px;
+      }
+      @include forNonPc {
+        font-size: 76px;
+      }
       &__num {
         color: var(--primary);
       }

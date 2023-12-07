@@ -1,0 +1,20 @@
+// // fonts
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("src/asset/fonts/Poppins-Bold.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PoppinsRegular";
+  src: url("src/asset/fonts/Poppins-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@mixin font-regular {
+  font-family: "PoppinsRegular";
+}
+@mixin font-bold {
+  font-family: "PoppinsBold";
+}

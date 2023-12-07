@@ -1,0 +1,30 @@
+@mixin forPc {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+@mixin forNonPc {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+@mixin for13inch_less {
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    @content;
+  }
+}
+@mixin forTb {
+  @media screen and (max-width: 1020px) and (min-width: 768px) {
+    @content;
+  }
+}
+@mixin forSpLarge {
+  @media screen and (max-width: 767px) and (min-width: 375px) {
+    @content;
+  }
+}
+@mixin forSp_less_375 {
+  @media screen and (max-width: 374px) {
+    @content;
+  }
+}
