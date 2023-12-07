@@ -137,7 +137,7 @@ const App = () => {
               <span className="birthday__style__error">{errors.year}</span>
             )}
           </div>
-          <button type="submit" className="arrow">
+          <button type="submit" className="arrow" aria-label="calculate_age">
             <img className="arrow__img" src={arrow} alt="" />
           </button>
         </form>
