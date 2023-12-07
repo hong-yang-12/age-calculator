@@ -143,7 +143,7 @@ const App = () => {
         </form>
         <div className="results">
           <p className="results__result">
-            <span className="results__result__num" id="year">
+            <span className="results__result__num">
               {result?.age_year === 0 ? (
                 "--"
               ) : (
