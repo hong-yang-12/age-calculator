@@ -1,5 +1,5 @@
-import React from "react";
 import { useEffect } from "react";
+import { useCallback } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ const CounterUp = ({ start = 0, end }) => {
   const ref = useRef(start);
   const accumulator = end / 200;
 
-  const updateCounterState = () => {
+  const updateCounterState = useCallback(() => {
     if (ref.current < end) {
       const result = Math.ceil(ref.current + accumulator);
       if (result > end) return setState(end);
@@ -16,7 +16,7 @@ const CounterUp = ({ start = 0, end }) => {
       ref.current = result;
       setTimeout(updateCounterState, 50);
     }
-  };
+  }, [accumulator, end]);
 
   useEffect(() => {
     let isMounted = true;
@@ -24,7 +24,7 @@ const CounterUp = ({ start = 0, end }) => {
       updateCounterState();
     }
     return () => (isMounted = false);
-  }, [start, end]);
+  }, [start, end, updateCounterState]);
 
   return <>{state}</>;
 };

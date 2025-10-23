@@ -1,7 +1,5 @@
-import React from "react";
 import arrow from "../src/assets/images/icon-arrow.svg";
 import { useState } from "react";
-import { useEffect } from "react";
 import CounterUp from "./components/CounterUp";
 
 const App = () => {
@@ -15,16 +13,6 @@ const App = () => {
     age_month: 0,
     age_day: 0,
   });
-  // const [result, setResult] = useState({
-  //   age_year: 0 || "--",
-  //   age_month: 0 || "--",
-  //   age_day: 0 || "--",
-  // });
-  // const [result, setResult] = useState({
-  //   age_year: "--",
-  //   age_month: "--",
-  //   age_day: "--",
-  // });
   const [errors, setErrors] = useState({});
 
   const today = new Date();
@@ -40,53 +28,46 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let age_year = current_year - parseInt(inputForm?.year);
-    let age_month = current_month - parseInt(inputForm?.month);
-    let age_day = current_day - parseInt(inputForm?.day);
-    if (age_month < 0) {
-      age_month = -1 * age_month;
-    }
-    if (age_day < 0) {
-      age_day = -1 * age_day;
-    }
-
-    //required validation
-    const daysInMonth = new Date(
-      inputForm?.year,
-      inputForm?.month,
-      0
-    ).getDate();
-
     const validationErrors = {};
-    if (!inputForm.day.trim()) {
-      validationErrors.day = "day required";
-    } else if (inputForm?.day < 1 || inputForm?.day > 31) {
-      validationErrors.day = "The day number is not between 1-31";
-    } else if (inputForm?.day > daysInMonth) {
-      validationErrors.day = "The date is invalid";
-    }
-    if (!inputForm.month.trim()) {
-      validationErrors.month = "month required";
-    } else if (inputForm?.month < 1 || inputForm?.month > 12) {
-      validationErrors.month = "The month number is not between 1-12";
-    }
+    const { day, month, year } = inputForm;
+    const daysInMonth = new Date(year, month, 0).getDate();
 
-    if (!inputForm?.year.trim()) {
-      validationErrors.year = "year required";
-    } else if (inputForm?.year > current_year) {
-      validationErrors.year = "The year is in the future";
-    }
+    if (!day) validationErrors.day = "Day is required";
+    else if (day < 1 || day > 31) validationErrors.day = "Invalid day";
+    else if (day > daysInMonth) validationErrors.day = "Date doesn't exist";
 
-    setErrors(validationErrors); //input errors
-    setResult({ age_year, age_month, age_day }); //submit form
-    //reset input form
-    setInputForm({
-      day: "",
-      month: "",
-      year: "",
-    });
+    if (!month) validationErrors.month = "Month is required";
+    else if (month < 1 || month > 12) validationErrors.month = "Invalid month";
+
+    if (!year) validationErrors.year = "Year is required";
+    else if (year > current_year)
+      validationErrors.year = "Year cannot be in the future";
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      let age_year = current_year - year;
+      let age_month = current_month - month;
+      let age_day = current_day - day;
+
+      if (age_day < 0) {
+        age_month -= 1;
+        const prevMonthDays = new Date(
+          current_year,
+          current_month - 1,
+          0
+        ).getDate();
+        age_day += prevMonthDays;
+      }
+
+      if (age_month < 0) {
+        age_year -= 1;
+        age_month += 12;
+      }
+
+      setResult({ age_year, age_month, age_day });
+    }
   };
-  console.log(result?.age_day, result?.age_month, result?.age_year);
 
   return (
     <div className="main">
@@ -129,7 +110,7 @@ const App = () => {
             <input
               className="birthday__style__input"
               id="year"
-              type="text"
+              type="number"
               onChange={handleChange}
               value={inputForm?.year}
             />
