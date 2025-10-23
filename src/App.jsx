@@ -64,7 +64,6 @@ const App = () => {
         age_year -= 1;
         age_month += 12;
       }
-
       setResult({ age_year, age_month, age_day });
     }
   };
